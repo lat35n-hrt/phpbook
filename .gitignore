@@ -1,0 +1,25 @@
+# XAMPPのログや一時ファイル
+*.log
+*.bak
+*.tmp
+*.swp
+*~
+error_log
+
+# OSやエディタの不要ファイル
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# デプロイに不要な開発ファイル
+vendor/
+node_modules/
+
+# 環境変数ファイル（例: APIキーやパスワード）
+.env
+
+# キャッシュやセッションファイル
+storage/framework/cache/
+storage/framework/sessions/
+storage/logs/
