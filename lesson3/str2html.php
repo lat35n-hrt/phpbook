@@ -1,5 +1,5 @@
 <?php
-require_once 'functions.php';
+require_once '../shared/functions.php';
 
 $fp = fopen('bookdata.csv', 'r');
 if($fp === false) {
