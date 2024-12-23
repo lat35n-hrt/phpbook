@@ -23,7 +23,7 @@ try {
     <tr><th>Update</th><th>Title</th><th>ISBN</th><th>Price</th><th>Publish Date</th><th>Author</th>
     <?php while ($row = $statement->fetch()): ?>
     <tr>
-        <!-- Added an Edit Column -->
+        <!-- Added an Update Column -->
         <td><a href="edit.php?id=<?php echo (int) $row['id']; ?>">Edit</a></td>
         <td><?php echo str2html($row['title']) ?></td>
         <td><?php echo str2html($row['isbn']) ?></td>
