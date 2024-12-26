@@ -15,6 +15,14 @@ include_once __DIR__ . '/../shared/header.php'; // with a shared header
     <input type='submit' value='Submit'>
 </form>
 <?php
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (empty($_POST)) {
+        echo "POST data is empty";
+        exit;
+    }
+}
+
 if(!empty($_SESSION['login'])){
     echo "Already Login<br>";
     echo "<a href=index.php>Return to the List</a>";
@@ -24,9 +32,6 @@ if((empty($_POST['username'])) || (empty($_POST['password']))){
     echo "Enter username, pasword";
     exit;
 }
-?>
-
-<?php
 
 try {
     $dbh = db_open();
@@ -39,6 +44,15 @@ try {
         echo "Logon Failed";
         exit;
     }
+
+if(password_verify($_POST['password'], $result['password'])){
+    session_regenerate_id(true);
+    $_SESSION['login'] = true;
+    header("Location: index.php");
+}else{
+    echo 'Login Failed(2)';
+}
+
 } catch(PDOException $e){
     echo "Error!!: " . str2html($e->getMessage()) . "<br>";
     //$e->getMessage() for a training purpose to know how it works
