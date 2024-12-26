@@ -1,0 +1,26 @@
+<?php
+session_start();
+require_once __DIR__ . '/../shared/functions.php'; // with a function for XSS (str2html) and db_open()
+include_once __DIR__ . '/../shared/header.php'; // with a shared header
+?>
+<form method='post' action='login.php'>
+    <p>
+        <label for="username">User Name: </label>
+        <input type='text' name='username'>
+    </p>
+    <p>
+        <label for="password">Password: </label>
+        <input type='password' name='password'>
+    </p>
+    <input type='submit' value='Submit'>
+</form>
+<?php
+if(!empty($_SESSION['login'])){
+    echo "Already Login<br>";
+    echo "<a href=index.php>Return to the List</a>";
+    exit;
+}
+if((!empty($_POST['username'])) || (!empty($_POST['password']))){
+    echo "Enter username, pasword";
+    exit;
+}
