@@ -20,7 +20,27 @@ if(!empty($_SESSION['login'])){
     echo "<a href=index.php>Return to the List</a>";
     exit;
 }
-if((!empty($_POST['username'])) || (!empty($_POST['password']))){
+if((empty($_POST['username'])) || (empty($_POST['password']))){
     echo "Enter username, pasword";
+    exit;
+}
+?>
+
+<?php
+
+try {
+    $dbh = db_open();
+    $sql = "SELECT password FROM users WHERE username = :username";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(":username", $_POST['username'], PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if(!$result){
+        echo "Logon Failed";
+        exit;
+    }
+} catch(PDOException $e){
+    echo "Error!!: " . str2html($e->getMessage()) . "<br>";
+    //$e->getMessage() for a training purpose to know how it works
     exit;
 }
