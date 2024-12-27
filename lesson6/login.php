@@ -1,35 +1,28 @@
 <?php
 session_start();
-require_once __DIR__ . '/../shared/functions.php'; // with a function for XSS (str2html) and db_open()
-include_once __DIR__ . '/../shared/header.php'; // with a shared header
+require_once __DIR__ . '/../shared/functions.php';
+include __DIR__ . '/../shared/header.php';
 ?>
-<form method='post' action='login.php'>
+<form method='post' action='login.php' class='loginform'>
     <p>
-        <label for="username">User Name: </label>
+        <label for="username">ユーザ名:</label>
         <input type='text' name='username'>
     </p>
     <p>
-        <label for="password">Password: </label>
+        <label for="password">パスワード:</label>
         <input type='password' name='password'>
     </p>
-    <input type='submit' value='Submit'>
+    <input type='submit' value='送信する'>
 </form>
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (empty($_POST)) {
-        echo "POST data is empty";
-        exit;
-    }
-}
-
-if(!empty($_SESSION['login'])){
-    echo "Already Login<br>";
-    echo "<a href=index.php>Return to the List</a>";
+if(!empty($_SESSION['login'])) {
+    echo "ログイン済です<br>";
+    echo "<a href=index.php>リストに戻る</a>";
     exit;
 }
-if((empty($_POST['username'])) || (empty($_POST['password']))){
-    echo "Enter username, pasword";
+if((empty($_POST['username'])) || (empty($_POST['password']))) {
+    echo "ユーザ名、パスワードを入力してください。";
     exit;
 }
 
@@ -40,21 +33,21 @@ try {
     $stmt->bindParam(":username", $_POST['username'], PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    if(!$result){
-        echo "Logon Failed";
+    if(!$result) {
+        echo "ログインに失敗しました。";
         exit;
     }
-
-if(password_verify($_POST['password'], $result['password'])){
-    session_regenerate_id(true);
-    $_SESSION['login'] = true;
-    header("Location: index.php");
-}else{
-    echo 'Login Failed(2)';
+    
+    if(password_verify($_POST['password'], $result['password'])){
+        session_regenerate_id(true);
+        $_SESSION['login'] = true;
+        header("Location: index.php");
+    }else{
+        echo 'ログインに失敗しました。(2)';
+    }
+} catch (PDOException $e) {
+        echo "エラー!: " . str2html($e->getMessage());
+        exit;
 }
 
-} catch(PDOException $e){
-    echo "Error!!: " . str2html($e->getMessage()) . "<br>";
-    //$e->getMessage() for a training purpose to know how it works
-    exit;
-}
+header("Location: index.php");
