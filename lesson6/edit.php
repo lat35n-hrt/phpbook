@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../shared/login_check.php'; // Login checker
-require_once __DIR__ . '../shared/functions.php'; // with a function for XSS (str2html) and db_open()
+require_once __DIR__ . '/../shared/functions.php'; // with a function for XSS (str2html) and db_open()
 //validation
 if(empty($_GET['id'])){
     echo "Specify id";
