@@ -11,7 +11,7 @@
 <div>
         <ul id='nav'>
             <li><a href='./'>Home</a></li>
-            <li><a href='./input.php'>Home</a></li>
+            <li><a href='./input.php'>Add</a></li>
             <li><a href='./logout.php'>Logout</a></li>
         </ul>
 </div>
