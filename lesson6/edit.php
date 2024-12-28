@@ -1,4 +1,9 @@
 <?php
+session_start();
+$token = bin2hex(random_bytes(20));
+$_SESSION['token'] = $token;
+?>
+<?php
 require_once __DIR__ . '/../shared/login_check.php'; // Login checker
 require_once __DIR__ . '/../shared/functions.php'; // with a function for XSS (str2html) and db_open()
 //validation
@@ -55,6 +60,7 @@ $html_form = <<<EOD
     </p>
     <p class='button'>
         <input type='hidden' name='id' value='$id'>
+        <input type='hidden' name='token' value='$token'>
         <input type='submit' value='Submit'>
     </p>
 </form>
