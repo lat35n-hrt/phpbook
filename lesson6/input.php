@@ -1,3 +1,9 @@
+<?php
+session_start();
+$token = bin2hex(random_bytes(20));
+$_SESSION['token'] = $token;
+?>
+
 <?php 
 require_once __DIR__ . '/../shared/login_check.php'; // Login checker
 include_once __DIR__ . '/../shared/header.php'; // with a shared header ?>
@@ -28,6 +34,7 @@ include_once __DIR__ . '/../shared/header.php'; // with a shared header ?>
     </p>
 
     <p class='button'>
+        <input type='hidden' name='token' value='<?php echo $token ?>'>
         <input type='submit' value='Submit'>
     </p>
 </form>
