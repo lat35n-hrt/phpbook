@@ -15,7 +15,7 @@ try {
     <?php while ($row = $statement->fetch()): ?>
     <tr>
         <!-- Added an Update Column -->
-        <td><a href="edit2.php?id=<?php echo (int) $row['id']; ?>">Edit</a></td>
+        <td><a href="edit.php?id=<?php echo (int) $row['id']; ?>">Edit</a></td>
         <td><?php echo str2html($row['title']) ?></td>
         <td><?php echo str2html($row['isbn']) ?></td>
         <td><?php echo str2html($row['price']) ?></td>
