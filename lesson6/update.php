@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../shared/functions.php'; // with a function for XSS (str2html) and db_open()
 include_once __DIR__ . '/../shared/error_check.php'; // with validations for error check
 include_once __DIR__ . '/../shared/header.php'; // with a shared header
+include_once __DIR__ . '/../shared/token_check.php'; // with a token check
 
 //validation
 if(empty($_POST['id'])){
