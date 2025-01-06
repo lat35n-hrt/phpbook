@@ -31,10 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_account'])) {
                 echo "Username already exists. Please choose a different one.";
             } else {
                 $hashedPassword = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+                $defaultRole = 'viewer'; // Default role is "viewer" for new users
 
-                $stmt = $dbh->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+                $stmt = $dbh->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, :role)");
                 $stmt->bindParam(':username', $_POST['new_username'], PDO::PARAM_STR);
                 $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+                $stmt->bindParam(':role', $defaultRole, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
                     $dbh->commit(); // Commit the transaction if insert is successful
