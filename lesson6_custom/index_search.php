@@ -5,8 +5,12 @@ $_SESSION['token'] = $token;
 ?>
 
 <?php
-require_once __DIR__ . '/../shared/login_check.php';
 require_once __DIR__ . '/../shared/functions.php';
+require_once __DIR__ . '/../shared/login_check.php';
+
+
+// Check user role
+$userRole = $_SESSION['role'] ?? null; // Get role from session or null if not set
 
 try {
     $dbh = db_open();
@@ -16,7 +20,7 @@ try {
     if (isset($_GET['min_price']) && trim($_GET['min_price']) !== '') { // Check if set AND not empty/whitespace
         $minPrice = filter_var($_GET['min_price'], FILTER_VALIDATE_INT);
         if ($minPrice === false) { // Check if validation failed (e.g., non-numeric input)
-            $minPriceError = "Invalid minimum price entered.";
+            echo "Invalid minimum price entered.";
         }
     } else {
         $minPrice = null; // Explicitly set to null if the input is empty
@@ -25,7 +29,7 @@ try {
     if (isset($_GET['max_price']) && trim($_GET['max_price']) !== '') { // Check if set AND not empty/whitespace
         $maxPrice = filter_var($_GET['max_price'], FILTER_VALIDATE_INT);
         if ($maxPrice === false) { // Check if validation failed (e.g., non-numeric input)
-            $maxPriceError = "Invalid maximum price entered.";
+            echo "Invalid maximum price entered.";
         }
     } else {
         $maxPrice = null; // Explicitly set to null if the input is empty
@@ -34,7 +38,7 @@ try {
     if (isset($_GET['year']) && trim($_GET['year']) !== '') {
         $year = filter_var($_GET['year'], FILTER_VALIDATE_INT);
         if ($year === false || $year < 1000 || $year > 9999) { // Check for non-integer or out-of-range year
-            $yearError = "Invalid year entered (must be a 4-digit year).";
+            echo "Invalid year entered (must be a 4-digit year).";
         }
     } else {
         $year = null; // Explicitly set to null if the input is empty
