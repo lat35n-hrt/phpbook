@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_account'])) {
                     $dbh->commit(); // Commit the transaction if insert is successful
                     echo "Account created successfully. You can now <a href='login.php'>log in</a>.";
                 } else {
+                    $dbh->rollBack(); // Rollback on any exception
                     echo "Error creating account.";
                 }
             }
