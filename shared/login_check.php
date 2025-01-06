@@ -7,3 +7,11 @@ if(empty($_SESSION['login'])){
     exit;
 }
 echo "<!----- Logged in ----->";
+
+//Select the role from user table.
+$dbh = db_open();
+$stmt = $dbh->prepare('SELECT role FROM users where username = :username');
+$stmt->bindValue(':username', $_SESSION['login']);
+$stmt->execute();
+$row = $stmt->fetch();
+$_SESSION['role'] = $row['role'];
