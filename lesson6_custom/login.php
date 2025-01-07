@@ -34,7 +34,7 @@ if((empty($_POST['username'])) || (empty($_POST['password']))){
 
 try {
     $dbh = db_open();
-    $sql = "SELECT password, role FROM users WHERE username = :username";
+    $sql = "SELECT password, role FROM users WHERE TRIM(LOWER(username)) = LOWER(:username)";
     $stmt = $dbh->prepare($sql);
     $username = trim($_POST['username']);
     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
