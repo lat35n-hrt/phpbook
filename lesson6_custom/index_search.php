@@ -9,9 +9,6 @@ require_once __DIR__ . '/../shared/functions.php';
 require_once __DIR__ . '/../shared/login_check.php';
 
 
-// Check user role
-$userRole = $_SESSION['role'] ?? null; // Get role from session or null if not set
-
 try {
     $dbh = db_open();
 
