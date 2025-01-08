@@ -61,6 +61,7 @@ try {
         $params[':year'] = $year;
     }
 
+    var_dump($_SESSION['role']);
     var_dump($sql); // Debugging
     var_dump($params); // Debugging
 
@@ -77,8 +78,10 @@ try {
 
     <table>
         <tr>
-            <th>Delete</th>
-            <th>Update</th>
+            <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'editor'): ?>
+                <th>Delete</th>
+                <th>Update</th>
+            <?php endif; ?>
             <th>Title</th>
             <th>ISBN</th>
             <th>Price</th>
@@ -87,14 +90,16 @@ try {
         </tr>
         <?php while ($row = $statement->fetch()): ?>
             <tr>
-                <td>
+                <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'editor'): ?>
+                    <td>
                     <form method="POST" action="delete.php">
                         <input type="hidden" name="id" value="<?php echo (int)$row['id']; ?>">
                         <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
                         <button type="submit">Delete</button>
                     </form>
-                </td>
-                <td><a href="edit.php?id=<?php echo (int)$row['id']; ?>">Edit</a></td>
+                    </td>
+                    <td><a href="edit.php?id=<?php echo (int)$row['id']; ?>">Edit</a></td>
+                <?php endif; ?>
                 <td><?php echo str2html($row['title']) ?></td>
                 <td><?php echo str2html($row['isbn']) ?></td>
                 <td><?php echo str2html($row['price']) ?></td>
