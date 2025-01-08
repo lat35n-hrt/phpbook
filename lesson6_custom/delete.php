@@ -24,7 +24,7 @@ if ($id === false) {
 
 // Check user role for permission
 if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'editor') {
-    echo "You do not have permission to edit books.";
+    echo "You do not have permission to delete books.";
     exit;
 }
 
