@@ -22,6 +22,13 @@ if ($id === false) {
     exit;
 }
 
+// Check user role for permission
+if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'editor') {
+    echo "You do not have permission to edit books.";
+    exit;
+}
+
+
 try {
     // Database connection
     $dbh = db_open();
