@@ -8,6 +8,9 @@ $_SESSION['token'] = $token;
 require_once __DIR__ . '/../shared/functions.php';
 require_once __DIR__ . '/../shared/login_check.php';
 
+if (!empty($_SESSION['username'])) { // Correct check
+    echo "Welcome, " . str2html($_SESSION['username']) . "(" . str2html($_SESSION['role']) . ")" . "!"; // Display username and role
+}
 
 try {
     $dbh = db_open();
@@ -61,7 +64,6 @@ try {
         $params[':year'] = $year;
     }
 
-    var_dump($_SESSION['role']);
     var_dump($sql); // Debugging
     var_dump($params); // Debugging
 
