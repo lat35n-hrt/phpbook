@@ -5,8 +5,14 @@ $_SESSION['token'] = $token;
 ?>
 
 <?php 
+require_once __DIR__ . '/../shared/functions.php'; // functions
 require_once __DIR__ . '/../shared/login_check.php'; // Login checker
 include_once __DIR__ . '/../shared/header.php'; // with a shared header 
+
+//display username and role
+if (!empty($_SESSION['username'])) {
+    echo "You're logging as " . str2html($_SESSION['username']) . "(" . str2html($_SESSION['role']) . ")" . "!";
+}
 
 // Check user role for permission
 if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'editor') {
