@@ -28,28 +28,29 @@ if(!empty($_SESSION['login'])){
     exit;
 }
 if((empty($_POST['username'])) || (empty($_POST['password']))){
-    echo "Enter username, pasword";
+    echo "Enter username, password";
     exit;
 }
 
 try {
     $dbh = db_open();
-    $sql = "SELECT password, role FROM users WHERE TRIM(LOWER(username)) = LOWER(:username)";
+    $sql = "SELECT id, password, role FROM users WHERE TRIM(LOWER(username)) = LOWER(:username)";
     $stmt = $dbh->prepare($sql);
     $username = trim($_POST['username']);
     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if(!$result){
+    if(!$user){
         echo "Logon Failed";
         exit;
     }
-    if(password_verify($_POST['password'], $result['password'])){
+    if(password_verify($_POST['password'], $user['password'])){
         session_regenerate_id(true);
         $_SESSION['login'] = true;
+        $_SESSION['id'] = $user['id'];       // Store the user ID
         $_SESSION['username'] = trim($_POST['username']); // Add the username
-        $_SESSION['role'] = $result['role'];
+        $_SESSION['role'] = $user['role'];
         header("Location: index_search.php");
     }else{
         echo 'Login Failed(2)';
