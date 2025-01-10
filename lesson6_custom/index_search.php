@@ -15,7 +15,6 @@ if (!empty($_SESSION['username'])) { // Correct check
 try {
     $dbh = db_open();
 
-
     // Explicitly check if the input is not only set but also not an empty string before calling filter_var():
     if (isset($_GET['min_price']) && trim($_GET['min_price']) !== '') { // Check if set AND not empty/whitespace
         $minPrice = filter_var($_GET['min_price'], FILTER_VALIDATE_INT);
@@ -45,7 +44,7 @@ try {
     }
 
     // Build the SQL query dynamically
-    $sql = 'SELECT * FROM books WHERE 1=1';
+    $sql = 'SELECT * , is_borrowed FROM books WHERE 1=1';
 
     $params = [];
 
@@ -89,6 +88,7 @@ try {
             <th>Price</th>
             <th>Publish Date</th>
             <th>Author</th>
+            <th>Status</th><th>Borrow</th>
         </tr>
         <?php while ($row = $statement->fetch()): ?>
             <tr>
@@ -107,6 +107,10 @@ try {
                 <td><?php echo str2html($row['price']) ?></td>
                 <td><?php echo str2html($row['publish']) ?></td>
                 <td><?php echo str2html($row['author']) ?></td>
+                <td><?php echo str2html($row['is_borrowed']) ? 'Borrowed' : 'Available'; ?></td> <td>
+                    <?php if (!$row['is_borrowed']): ?> <a href="borrow.php?book_id=<?php echo (int)$row['id']; ?>">Borrow</a>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endwhile; ?>
     </table>
