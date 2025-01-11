@@ -36,7 +36,7 @@ try {
     $stmt = $dbh->prepare('INSERT INTO borrowed_books (book_id, user_id, borrow_date, due_date) VALUES (:book_id, :user_id, :borrow_date, :due_date)');
     $stmt->bindValue(':book_id', $bookId, PDO::PARAM_INT);
     $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
-    $stmt->bindValue(':borrow_date', $borrowDate->format('Y-m-d'));
+    $stmt->bindValue(':borrow_date', $borrowDate->format('Y-m-d H:i:s'));
     $stmt->bindValue(':due_date', $dueDateString);
     $stmt->execute();
 
@@ -62,4 +62,3 @@ try {
     echo "An error occurred while borrowing the book.";
     exit;
 }
-?>
