@@ -30,8 +30,8 @@ try {
 
     // Borrow the book
     $borrowDate = new DateTime();
-    $dueDate = (clone $borrowDate)->modify('+14 days'); // 14-day borrowing period
-    $dueDateString = $dueDate->format('Y-m-d');
+    $dueDate = (clone $borrowDate)->modify('+14 days')->setTime(20, 0, 0); // 14-day borrowing period -> Set time to 20:00:00; 
+    $dueDateString = $dueDate->format('Y-m-d H:i:s');
 
     $stmt = $dbh->prepare('INSERT INTO borrowed_books (book_id, user_id, borrow_date, due_date) VALUES (:book_id, :user_id, :borrow_date, :due_date)');
     $stmt->bindValue(':book_id', $bookId, PDO::PARAM_INT);
