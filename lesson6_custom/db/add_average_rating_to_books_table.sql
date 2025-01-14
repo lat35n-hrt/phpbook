@@ -1,0 +1,2 @@
+ALTER TABLE books
+ADD COLUMN average_rating DECIMAL(3, 2) DEFAULT 0.00;
