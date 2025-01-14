@@ -1,0 +1,1 @@
+ALTER TABLE reviews ADD CHECK (rating >= 1 AND rating <= 5);
