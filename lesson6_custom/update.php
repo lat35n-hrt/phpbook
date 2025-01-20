@@ -35,7 +35,7 @@ $stmt->execute();
 $dbh->commit();
 
 // Log success
-error_log("Add successful for Book title: " . $_POST['title'] . " ,Book id: " . $_POST['id'] . " ,User ID: " . $_SESSION['username']);
+error_log("Update successful for Book title: " . $_POST['title'] . " ,Book id: " . $_POST['id'] . " ,User ID: " . $_SESSION['username']);
 
 echo "Updated Data <br>";
 echo "<a href='index.php'> Return to the list</a>";
