@@ -48,6 +48,9 @@ try {
     // Commit the transaction
     $dbh->commit();
 
+    // Log success
+    error_log("Borrow Book ID: " . $bookId . ",User ID: " . $_SESSION['username']);
+
     header("Location: index_search.php?borrow_success=1"); // Redirect with success message
     exit;
 
@@ -60,5 +63,6 @@ try {
 
     error_log($e->getMessage());
     echo "An error occurred while borrowing the book.";
+
     exit;
 }
