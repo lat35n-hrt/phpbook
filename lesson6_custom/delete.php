@@ -59,6 +59,8 @@ try {
     // Commit the transaction
     $dbh->commit();
 
+    // Log success
+    error_log("Delete successful for Book id: " . $_POST['id'] . " ,User ID: " . $_SESSION['username']);
     echo "Book information has been deleted.<br>";
     echo "<a href='index.php'>Return to the list</a>";
 } catch (PDOException $e) {
@@ -67,6 +69,13 @@ try {
         $dbh->rollBack();
     }
     echo "An error occurred: " . str2html($e->getMessage()) . "<br>";
+
+    // Rollback on any exception
+    if ($dbh->inTransaction()) { // Check if a transaction is active before rollback
+        $dbh->rollBack();
+    }
+    error_log($e->getMessage());
+
     exit;
 }
 ?>
